@@ -1,5 +1,5 @@
-const chat = require('./chat');
+const chatController = require('./chatController');
 
 module.exports = {
-  chat,
+  chatController,
 };

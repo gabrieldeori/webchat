@@ -9,14 +9,14 @@
     
     <ul>
       Tela de mensagens
-      <% dataToRender.messages.forEach((message) => { %>
+      <% if (dataToRender) dataToRender.messages.forEach((message) => { %>
         <li data-testid="message"><%= message %></li>
       <% })%>
     </ul>
 
-    <ul>
+    <ul id='onlineUsers'>
       Tela de usuários
-      <% dataToRender.users.forEach((user) => { %>
+      <% if (dataToRender) dataToRender.users.forEach((user) => { %>
         <li data-testid="online-user"><%= user %></li>
       <% })%>
     </ul>
@@ -24,4 +24,16 @@
     <input data-testid="message-box" id="messageBox" name="Message box" type="text">
     <input data-testid="send-button" type="button" value="sendMessage">
   </body>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const users = ['teste'];
+    const onlineUsers = document.querySelector('#onlineUsers')
+    const socket = io();
+    socket.on('connected', ({ onlineUser, timeStamp }) => {
+      const li = document.createElement('li');
+      li.innerHTML = `${timeStamp} ${onlineUser} `;
+      li.setAttribute('data-testid', 'online-user');
+      onlineUsers.appendChild(li);
+    })
+  </script>
 </html>
