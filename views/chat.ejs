@@ -4,18 +4,24 @@
     <title>Tela de Chat</title>
   </head>
   <body>
-    <input data-testid="nickname-box" id="nicknameBox" name="nick name box" type="text">
+    <input data-testid="nickname-box" id="nicknameBox" name="Nick name box" type="text">
     <input data-testid="nickname-button" type="button" value="SaveNickname">
     
     <ul>
       Tela de mensagens
+      <% dataToRender.messages.forEach((message) => { %>
+        <li data-testid="message"><%= message %></li>
+      <% })%>
     </ul>
 
     <ul>
       Tela de usuários
+      <% dataToRender.users.forEach((user) => { %>
+        <li data-testid="online-user"><%= user %></li>
+      <% })%>
     </ul>
 
-    <input data-testid="message-box" id="messageBox" name="Message Box" type="text">
+    <input data-testid="message-box" id="messageBox" name="Message box" type="text">
     <input data-testid="send-button" type="button" value="sendMessage">
   </body>
 </html>
