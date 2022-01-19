@@ -2,7 +2,7 @@ const moment = require('moment');
 
 function randomizeAlphabetic(length) {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-  let result = ' ';
+  let result = '';
     const charactersLength = characters.length;
     for (let i = 0; i < length; i += 1) {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -25,9 +25,9 @@ function createUser() {
   return onlineUser;
 }
 
-function createMessage(message, nickname) {
+function createMessage(chatMessage, nickname) {
   const createdAt = getTimeAndFormat();
-  const messageObject = { createdAt, message, nickname };
+  const messageObject = { createdAt, chatMessage, nickname };
   return messageObject;
 }
 

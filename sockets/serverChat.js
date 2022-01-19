@@ -1,13 +1,17 @@
-const { createUser, createMessage } = require('../utils');
+const { createMessage, createUser } = require('../utils');
 const messagesModels = require('../models/messages');
 
 const onlineUsers = {};
 
 async function firstConnect(io, socket) {
-    onlineUsers[socket.id] = await createUser();
+  socket.on('firstConnect', async () => {
     const everyMessage = await messagesModels.get();
-    io.emit('refreshMessages', everyMessage);
+    onlineUsers[socket.id] = createUser();
+    const { nickname } = onlineUsers[socket.id];
     io.emit('refreshOnlineUsers', Object.values(onlineUsers));
+    io.emit('refreshMessages', everyMessage);
+    io.emit('updateNickname', nickname);
+  });
 }
 
 function disconnect(io, socket) {
@@ -18,8 +22,8 @@ function disconnect(io, socket) {
 }
 
 function sendMessage(io, socket) {
-  socket.on('sendMessage', async (message) => {
-    const newMessage = createMessage(message, onlineUsers[socket.id].nickname);
+  socket.on('message', async ({ chatMessage, nickname }) => {
+    const newMessage = createMessage(chatMessage, nickname);
     await messagesModels.create(newMessage);
     const everyMessage = await messagesModels.get();
     io.emit('refreshMessages', everyMessage);
@@ -30,6 +34,7 @@ function changeNick(io, socket) {
   socket.on('changeNick', (newNick) => {
     onlineUsers[socket.id].nickname = newNick;
     io.emit('refreshOnlineUsers', Object.values(onlineUsers));
+    io.emit('updateNickname', newNick);
   });
 }
 

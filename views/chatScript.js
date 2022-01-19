@@ -19,9 +19,16 @@ function createListMessage(formated) {
   return li;
 }
 
+let frontNickName = '';
+
+client.emit('firstConnect');
+client.on('updateNickname', (newNick) => {
+  frontNickName = newNick;
+});
+
 saveNick.addEventListener('click', (event) => {
   event.preventDefault();
-  if (nickInput) {
+  if (nickInput.value) {
     const newNick = nickInput.value;
     client.emit('changeNick', newNick);
   }
@@ -30,8 +37,8 @@ saveNick.addEventListener('click', (event) => {
 msgSendButton.addEventListener('click', (event) => {
   event.preventDefault();
   if (messageInput.value !== '') {
-    const messageToSend = messageInput.value;
-    client.emit('sendMessage', messageToSend); 
+    const chatMessage = messageInput.value;
+    client.emit('message', { chatMessage, nickname: frontNickName });
   }
 });
 
@@ -45,8 +52,8 @@ client.on('refreshOnlineUsers', (onlineUsersData) => {
 
 client.on('refreshMessages', (everyMessage) => {
   messagesBox.innerHTML = '';
-  everyMessage.forEach(({ createdAt, nickname, message }) => {
-    const newMessage = createListMessage(`${createdAt} ${nickname} ${message}`);
+  everyMessage.forEach(({ createdAt, nickname, chatMessage }) => {
+    const newMessage = createListMessage(`${createdAt} ${nickname} ${chatMessage}`);
     messagesBox.appendChild(newMessage);
   });
 });
