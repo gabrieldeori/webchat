@@ -25,11 +25,18 @@ function sendMessage(io, socket) {
   });
 }
 
+function changeNick(socket) {
+  socket.on('changeNick', (newNick) => {
+    onlineUsers[socket.id].nickname = newNick;
+  });
+}
+
 function chatSocket(io) {
   io.on('connection', async (socket) => {
     firstConnect(socket);
     disconnect(io, socket);
     sendMessage(io, socket);
+    changeNick(socket);
   });
 }
 
