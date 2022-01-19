@@ -3,10 +3,11 @@ const messagesModels = require('../models/messages');
 
 const onlineUsers = {};
 
-async function firstConnect(socket) {
+async function firstConnect(io, socket) {
     onlineUsers[socket.id] = await createUser();
-    const firstEveryMessage = await messagesModels.get();
-    return firstEveryMessage;
+    const everyMessage = await messagesModels.get();
+    io.emit('refreshMessages', everyMessage);
+    io.emit('refreshOnlineUsers', Object.values(onlineUsers));
 }
 
 function disconnect(io, socket) {
@@ -25,18 +26,19 @@ function sendMessage(io, socket) {
   });
 }
 
-function changeNick(socket) {
+function changeNick(io, socket) {
   socket.on('changeNick', (newNick) => {
     onlineUsers[socket.id].nickname = newNick;
+    io.emit('refreshOnlineUsers', Object.values(onlineUsers));
   });
 }
 
-function chatSocket(io) {
+async function chatSocket(io) {
   io.on('connection', async (socket) => {
-    firstConnect(socket);
+    firstConnect(io, socket);
     disconnect(io, socket);
     sendMessage(io, socket);
-    changeNick(socket);
+    changeNick(io, socket);
   });
 }
 
