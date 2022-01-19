@@ -4,8 +4,8 @@
     <title>Tela de Chat</title>
   </head>
   <body>
-    <input data-testid="nickname-box" id="nicknameBox" name="Nick name box" type="text">
-    <input data-testid="nickname-button" type="button" value="SaveNickname">
+    <input data-testid="nickname-box" id="nickInput" type="text">
+    <input data-testid="nickname-button" id="nickSaveBtn" type="button" value="Salvar">
     <br>
     Tela de mensagens
     <ul id='messagesBox'>
@@ -15,8 +15,8 @@
     <ul id='onlinesBox'>
     </ul>
 
-    <input data-testid="message-box" id="messageBox" name="Message box" type="text">
-    <input data-testid="send-button" type="button" value="sendMessage">
+    <input data-testid="message-box" id="messageInput" type="text">
+    <input data-testid="send-button" id="msgSendButton" type="button" value="Enviar">
   </body>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/chatScript.js"></script>

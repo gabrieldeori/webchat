@@ -1,6 +1,10 @@
 const client = window.io();
 const onlinesBox = document.querySelector('#onlinesBox');
+const saveNick = document.querySelector('#nickSaveBtn');
+const nickInput = document.querySelector('#nickInput');
 const messagesBox = document.querySelector('#messagesBox');
+const msgSendButton = document.querySelector('#msgSendButton');
+const messageInput = document.querySelector('#messageInput');
 
 function createListUser(nickname) {
   const li = document.createElement('li');
@@ -14,6 +18,22 @@ function createListMessage(formated) {
   li.innerHTML = formated;
   return li;
 }
+
+saveNick.addEventListener('click', (event) => {
+  event.preventDefault();
+  if (nickInput) {
+    const newNick = nickInput.value;
+    client.emit('changeNick', newNick);
+  }
+});
+
+msgSendButton.addEventListener('click', (event) => {
+  event.preventDefault();
+  if (messageInput.value !== '') {
+    const messageToSend = messageInput.value;
+    client.emit('sendMessage', messageToSend); 
+  }
+});
 
 client.on('refreshOnlineUsers', (onlineUsersData) => {
   onlinesBox.innerHTML = '';
@@ -30,5 +50,3 @@ client.on('refreshMessages', (everyMessage) => {
     messagesBox.appendChild(newMessage);
   });
 });
-// const messageToSend = 'Teste Message';
-// client.emit('sendMessage', messageToSend);
