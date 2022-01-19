@@ -1,15 +1,14 @@
-// const somemodel = require('../models/somemodel');
+const models = require('../models');
 
-const chat = async (_req, res) => {
-  const users = ['userA', 'userB', 'userC'];
-  const messages = [
-    '09-10-2020 2:35:09 PM - userA: Olá meu caros amigos!',
-    '09-10-2020 2:35:09 PM - userB: Baum?!',
-    '09-10-2020 2:35:09 PM - userC: Fala ê :D',
-  ];
-
-  const dataToRender = { users, messages };
-  res.status(200).render('chat', { dataToRender });
-};
+async function chat(_req, res) {
+  try {
+    const users = await models.users.get();
+    const messages = await models.messages.get();
+    const dataToRender = { users, messages };
+    res.status(200).render('chat', { dataToRender });
+  } catch (e) {
+    console.log(e);
+  }
+}
 
 module.exports = chat;

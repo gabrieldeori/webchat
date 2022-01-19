@@ -7,18 +7,18 @@
     <input data-testid="nickname-box" id="nicknameBox" name="Nick name box" type="text">
     <input data-testid="nickname-button" type="button" value="SaveNickname">
     
-    <ul>
+    <ul id='telaMensagens'>
       Tela de mensagens
-      <% if (dataToRender) dataToRender.messages.forEach((message) => { %>
+      <% dataToRender.messages.forEach((message) => { %>
         <li data-testid="message"><%= message %></li>
-      <% })%>
+      <% }) %>
     </ul>
 
-    <ul id='onlineUsers'>
+    <ul id='telaOnlineUsers'>
       Tela de usuários
-      <% if (dataToRender) dataToRender.users.forEach((user) => { %>
-        <li data-testid="online-user"><%= user %></li>
-      <% })%>
+      <% dataToRender.users.forEach(({ onlineUser }) => { %>
+        <li data-testid="online-user"><%= onlineUser %></li>
+      <% }) %>
     </ul>
 
     <input data-testid="message-box" id="messageBox" name="Message box" type="text">
@@ -26,14 +26,21 @@
   </body>
   <script src="/socket.io/socket.io.js"></script>
   <script>
-    const users = ['teste'];
-    const onlineUsers = document.querySelector('#onlineUsers')
-    const socket = io();
-    socket.on('connected', ({ onlineUser, timeStamp }) => {
+    const telaOnlineUsers = document.querySelector('#telaOnlineUsers');
+    
+    function createListUser(user) {
+      const { onlineUser } = user;
       const li = document.createElement('li');
-      li.innerHTML = `${timeStamp} ${onlineUser} `;
       li.setAttribute('data-testid', 'online-user');
-      onlineUsers.appendChild(li);
-    })
+      li.innerHTML = onlineUser;
+      return li;
+    }
+    
+    const client = window.io();
+    
+    client.on('insertOnlineUser', (user) => {
+      const newUser = createListUser(user);
+      telaOnlineUsers.appendChild(newUser);
+    });
   </script>
 </html>

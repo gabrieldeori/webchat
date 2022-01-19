@@ -20,8 +20,7 @@ function getTimeAndFormat() {
 function createUser() {
   const randomizedNameLength = 16;
   const onlineUser = randomizeAlphabetic(randomizedNameLength);
-  const timeStamp = getTimeAndFormat();
-  return { onlineUser, timeStamp };
+  return onlineUser;
 }
 
 module.exports = {
