@@ -3,7 +3,7 @@ const messagesModels = require('../models/messages');
 
 const onlineUsers = {};
 
-async function firstConnect(io, socket) {
+function firstConnect(io, socket) {
   socket.on('firstConnect', async () => {
     const everyMessage = await messagesModels.get();
     onlineUsers[socket.id] = createUser();
@@ -38,8 +38,8 @@ function changeNick(io, socket) {
   });
 }
 
-async function chatSocket(io) {
-  io.on('connection', async (socket) => {
+function chatSocket(io) {
+  io.on('connection', (socket) => {
     firstConnect(io, socket);
     disconnect(io, socket);
     sendMessage(io, socket);

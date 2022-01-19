@@ -1,9 +1,5 @@
-async function chat(_req, res) {
-  try {
+function chat(_req, res) {
     res.status(200).render('chat');
-  } catch (e) {
-    console.log(e);
-  }
 }
 
 module.exports = chat;
