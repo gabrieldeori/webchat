@@ -25,8 +25,15 @@ function createUser() {
   return onlineUser;
 }
 
+function createMessage(message, nickname) {
+  const createdAt = getTimeAndFormat();
+  const messageObject = { createdAt, message, nickname };
+  return messageObject;
+}
+
 module.exports = {
-  randomizeAlphabetic,
-  getTimeAndFormat,
+  createMessage,
   createUser,
+  getTimeAndFormat,
+  randomizeAlphabetic,
 };
