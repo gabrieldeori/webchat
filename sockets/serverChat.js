@@ -1,12 +1,17 @@
 const { createUser } = require('../utils');
-const models = require('../models');
+const usersModel = require('../models/users');
+
+const onlineUsers = {};
 
 function chatSocket(io) {
   io.on('connection', async (socket) => {
-    const user = createUser();
-    const response = await models.users.create(user);
-    console.log(response);
-    io.emit('insertOnlineUser', user);
+    onlineUsers[socket.id] = createUser();
+    io.emit('refreshOnlineUsers', Object.values(onlineUsers));
+    
+    socket.on('disconnect', () => {
+      delete onlineUsers[socket.id];
+      io.emit('refreshOnlineUsers', Object.values(onlineUsers));
+    });
   });
 }
 

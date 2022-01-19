@@ -6,41 +6,18 @@
   <body>
     <input data-testid="nickname-box" id="nicknameBox" name="Nick name box" type="text">
     <input data-testid="nickname-button" type="button" value="SaveNickname">
-    
+    br
+    Tela de mensagens
     <ul id='telaMensagens'>
-      Tela de mensagens
-      <% dataToRender.messages.forEach((message) => { %>
-        <li data-testid="message"><%= message %></li>
-      <% }) %>
     </ul>
-
-    <ul id='telaOnlineUsers'>
-      Tela de usuários
-      <% dataToRender.users.forEach(({ onlineUser }) => { %>
-        <li data-testid="online-user"><%= onlineUser %></li>
-      <% }) %>
+    
+    Tela de usuários
+    <ul id='onlineUsers'>
     </ul>
 
     <input data-testid="message-box" id="messageBox" name="Message box" type="text">
     <input data-testid="send-button" type="button" value="sendMessage">
   </body>
   <script src="/socket.io/socket.io.js"></script>
-  <script>
-    const telaOnlineUsers = document.querySelector('#telaOnlineUsers');
-    
-    function createListUser(user) {
-      const { onlineUser } = user;
-      const li = document.createElement('li');
-      li.setAttribute('data-testid', 'online-user');
-      li.innerHTML = onlineUser;
-      return li;
-    }
-    
-    const client = window.io();
-    
-    client.on('insertOnlineUser', (user) => {
-      const newUser = createListUser(user);
-      telaOnlineUsers.appendChild(newUser);
-    });
-  </script>
+  <script src="/chatScript.js"></script>
 </html>

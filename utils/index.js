@@ -19,7 +19,9 @@ function getTimeAndFormat() {
 
 function createUser() {
   const randomizedNameLength = 16;
-  const onlineUser = randomizeAlphabetic(randomizedNameLength);
+  const nickname = randomizeAlphabetic(randomizedNameLength);
+  const createdAt = getTimeAndFormat();
+  const onlineUser = { nickname, createdAt };
   return onlineUser;
 }
 
