@@ -10,6 +10,12 @@ function randomizeAlphabetic(length) {
     return result;
 }
 
+function createNickname() {
+  const randomizedNameLength = 16;
+  const nickname = randomizeAlphabetic(randomizedNameLength);
+  return nickname;
+}
+
 function getTimeAndFormat() {
   const actualDate = new Date();
   const timeFormat = 'DD-MM-YYYY HH:MM:SS A';
@@ -17,12 +23,10 @@ function getTimeAndFormat() {
   return timeStamp;
 }
 
-function createUser() {
+function createNickname() {
   const randomizedNameLength = 16;
   const nickname = randomizeAlphabetic(randomizedNameLength);
-  const createdAt = getTimeAndFormat();
-  const onlineUser = { nickname, createdAt };
-  return onlineUser;
+  return nickname;
 }
 
 function createMessage(chatMessage, nickname) {
@@ -33,7 +37,7 @@ function createMessage(chatMessage, nickname) {
 
 module.exports = {
   createMessage,
-  createUser,
+  createNickname,
   getTimeAndFormat,
   randomizeAlphabetic,
 };
