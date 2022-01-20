@@ -23,12 +23,6 @@ function getTimeAndFormat() {
   return timeStamp;
 }
 
-function createNickname() {
-  const randomizedNameLength = 16;
-  const nickname = randomizeAlphabetic(randomizedNameLength);
-  return nickname;
-}
-
 function createMessage(chatMessage, nickname) {
   const createdAt = getTimeAndFormat();
   const messageObject = { createdAt, chatMessage, nickname };
