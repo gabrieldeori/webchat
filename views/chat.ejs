@@ -6,18 +6,17 @@
   <body>
     <p data-testid="online-user" id="onlineUser">NONE</p>
     <input data-testid="nickname-box" id="nickInput" type="text">
-    <button data-testid="nickname-button" id="nickBtn" type="button" value="Salvar">
+    <button data-testid="nickname-button" id="nickBtn" type="button">Salvar</button>
+    <br>
+    Tela de usuários
+    <ul id='nickBox'>
+    </ul>
     <br>
     Tela de mensagens
-    <ul id='messagesBox'>
+    <ul id='msgBox'>
     </ul>
-    
-    Tela de usuários
-    <ul id='onlinesBox'>
-    </ul>
-
     <input data-testid="message-box" id="msgInput" type="text">
-    <button data-testid="send-button" id="msgBtn" type="button" value="Enviar">
+    <button data-testid="send-button" id="msgBtn" type="button">Enviar</button>
   </body>
   <script src="/socket.io/socket.io.js"></script>
   <script src="nickname.js"></script>

@@ -1,13 +1,6 @@
 const msgBtn = document.querySelector('#msgBtn');
 const msgInput = document.querySelector('#msgInput');
-const onlinesBox = document.querySelector('#onlinesBox');
-
-// function createListUser(nickname) {
-//   const li = document.createElement('li');
-//   li.setAttribute('data-testid', 'online-user');
-//   li.innerHTML = nickname;
-//   return li;
-// }
+const msgBox = document.querySelector('#msgBox');
 
 function createListMessage(message) {
   const li = document.createElement('li');
@@ -18,7 +11,10 @@ function createListMessage(message) {
 
 msgBtn.addEventListener('click', (event) => {
   event.preventDefault();
-  if (msgInput.value && msgInput.value !== '') {
-    onlinesBox.appendChild(createListMessage(msgInput.value));
+  const message = msgInput.value;
+  if (message && message !== '') {
+    const sSNickKey = 'sessionStorageNicknameKeyFromWebChat';
+    const nickname = sessionStorage.getItem(sSNickKey);
+    msgBox.appendChild(createListMessage(`${nickname} - ${message}`));
   }
 });
