@@ -14,6 +14,12 @@
     <br>
     Tela de mensagens
     <ul id='msgBox'>
+      <% messages.map((messageInfo) => { 
+        const { timestamp, nickname, message } = messageInfo
+        const newMessage = `${timestamp} - ${nickname}: ${message}`;
+      %>
+        <li data-testid="message"><%= newMessage %></li>
+      <% }) %>
     </ul>
     <input data-testid="message-box" id="msgInput" type="text">
     <button data-testid="send-button" id="msgBtn" type="button">Enviar</button>

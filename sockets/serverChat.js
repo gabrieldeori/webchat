@@ -1,11 +1,12 @@
 const { getTimeAndFormat } = require('../utils');
+const messagesModels = require('../models/messages');
 
 function chatSocket(io) {
   io.on('connection', (socket) => {
-    console.log(socket.id);
-    socket.on('message', ({ chatMessage, nickname }) => {
-      const messageTimeStamps = getTimeAndFormat();
-      const formattedMessageToFront = `${messageTimeStamps} - ${nickname}: ${chatMessage}`;
+    socket.on('message', async ({ chatMessage, nickname }) => {
+      const timestamp = getTimeAndFormat();
+      const formattedMessageToFront = `${timestamp} - ${nickname}: ${chatMessage}`;
+      await messagesModels.create({ message: chatMessage, nickname, timestamp });
       io.emit('message', formattedMessageToFront);
     });
   });
