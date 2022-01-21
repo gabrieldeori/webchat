@@ -72,17 +72,46 @@ nickBtn.addEventListener('click', (event) => {
 
 client.emit('connected', userNickName);
 
-client.on('updateUsers', ({ users, socketId }) => {
-  nickBox.innerHTML = '';
-  const thisNickName = users[socketId];
-  const thisLi = createListUser(thisNickName);
-  nickBox.appendChild(thisLi);
+client.on('updateUsers', (loggedUsers) => {
+  const clientNick = loggedUsers[client.id];
+  const nicknames = Object.values(loggedUsers);
+  const posNick = nicknames.indexOf(clientNick);
   
-  const nicknames = Object.values(users);
+  nicknames.splice(posNick, 1);
+  nicknames.unshift(clientNick);
+  
+  nickBox.innerHTML = '';
   nicknames.forEach((nickname) => {
-    if (thisNickName !== nickname) {
-      const newUser = createListUser(nickname);
-      nickBox.appendChild(newUser);
-    }
+    const newUser = createListUser(nickname);
+    nickBox.appendChild(newUser);
   });
 });
+
+// client.on('updateUsers', ({ users, socketId }) => {
+//   console.log(users);
+//   nickBox.innerHTML = '';
+//   const thisNickName = users[socketId];
+//   const nicknames = Object.values(users);
+//   if (socketId !== client.id) {
+//     
+//   }
+//   nicknames.forEach((nickname) => {
+//     const newUser = createListUser(nickname);
+//     nickBox.appendChild(newUser);
+//   });
+//   userNickName = thisNickName;
+//   console.log(users);
+// });
+
+// client.on('renickUpdateUsers', ({ users }) => {
+//   const thisNickName = users[socketId];
+//   nickBox.innerHTML = '';
+//   const nicknames = Object.values(users);
+//     const posNick = nicknames.indexOf(thisNickName);
+//     nicknames.splice(posNick, 1);
+//     nicknames.unshift(thisNickName);
+//   nicknames.forEach((nickname) => {
+//     const newUser = createListUser(nickname);
+//     nickBox.appendChild(newUser);
+//   });
+// });
