@@ -8,11 +8,7 @@
 
 ---
 
-# Entregáveis
-
----
-
-## O que deverá ser desenvolvido
+# O que deverá ser desenvolvido
 Neste projeto você vai desenvolver um _chat_ online e ao utilizar essa aplicação um usuário deverá ser capaz de:
 
  - Usar um front-end para enviar mensagens a clientes conectados;
@@ -24,7 +20,7 @@ O desenho abaixo demonstra como o projeto pode ser estruturado ao decorrer do de
 
 ![image](./exemplo.png)
 
-## Desenvolvimento
+# Desenvolvimento
 
 Deverá ser desenvolvida uma aplicação `Node.js` de _chat_, usando `socket.io` para emitir eventos e atualizar estado no servidor e cliente.
 
